@@ -1,0 +1,55 @@
+#!/usr/bin/env node
+
+var	program = require('commander'),
+	cliInterface = require('../lib/cli'),
+	EsFrikiBrowser = require('../lib/esfriki');
+
+
+program
+	.version('0.1.0')
+	.usage("-a <action> [-upf]")
+	.option('-s, --site <value>', 'URL del sitio')
+	.option('-a, --action <action>', 'Accion: post, upload, read')
+	.option('-u, --user <value>', 'Usuario')
+	.option('-p, --password <value>', 'Password')
+	.option('-c, --content <value>', 'Contenido a publicar')
+	.option('-f, --file <value>', "Archivo en caso de subida")
+	.option('-d, --debug', "Debug info")
+	.parse(process.argv);
+
+
+if (program.site) {
+
+	if (!program.site.match(/^[\w]:\/\//i)) {
+		program.site = "http://" + program.site;
+	}
+
+} else {
+	process.stderr.write("Debes especificar un site\n");
+	process.exit(3);
+}
+
+if (!program.action || program.action === '') {
+	process.stderr.write("Necesitas definir una accion\n");
+	process.exit(4);
+}
+
+if (typeof cliInterface[program.action] === 'function') {
+
+	cliInterface[program.action](program, function (err, res) {
+		if (err) {
+			process.stderr.write(err+"\n");
+			process.exit(1);
+		}
+
+		process.stdout.write(res+"\n");
+		process.exit(0);
+
+	});
+} else {
+
+	process.stderr.write("No existe esa accion\n");
+	process.exit(2);
+
+}
+

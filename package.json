@@ -1,0 +1,22 @@
+{
+  "name": "f2pclient",
+  "version": "0.1.0",
+  "description": "Client that uses the F2P REST API(?).",
+  "main": "lib/esfriki.js",
+  "bin": {
+	"f2p" : "bin/f2pclient"
+  },
+  "author": {
+	"name": "Aza",
+	"url": "http://esfriki.com"
+  },
+  "colaborators": {
+	"exos": "http://blog.exodica.com.ar"
+  },
+  "license": "GPL2",
+  "dependencies": {
+    "commander": "^2.2.0",
+    "winston": "^0.7.3",
+    "zombie": "^2.0.0-alpha31"
+  }
+}
